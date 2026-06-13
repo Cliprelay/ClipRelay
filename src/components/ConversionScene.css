@@ -1,0 +1,192 @@
+.conversion {
+  position: relative;
+  z-index: 2;
+  padding: 160px 40px;
+  overflow: hidden;
+}
+
+.conversion__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.conversion__header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.conversion__label {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--green-glow);
+  margin-bottom: 20px;
+}
+
+.conversion__title {
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1.1;
+}
+
+.conversion__title--accent {
+  color: var(--green-glow);
+}
+
+/* ── Funnel area ── */
+.conversion__funnel {
+  position: relative;
+  padding: 60px 0;
+}
+
+.conversion__svg {
+  width: 100%;
+  height: 120px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  z-index: 0;
+  opacity: 0.8;
+}
+
+/* ── Particles ── */
+.conversion__particles {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  height: 2px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.conversion__particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green-glow);
+  box-shadow: 0 0 12px var(--green-glow), 0 0 24px rgba(76, 175, 80, 0.3);
+  top: -3px;
+  animation: particlePulse 2s ease-in-out infinite;
+}
+
+.conversion__particle:nth-child(2) { animation-delay: 0.3s; }
+.conversion__particle:nth-child(3) { animation-delay: 0.6s; }
+.conversion__particle:nth-child(4) { animation-delay: 0.9s; }
+.conversion__particle:nth-child(5) { animation-delay: 1.2s; }
+.conversion__particle:nth-child(6) { animation-delay: 1.5s; }
+
+@keyframes particlePulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.8); opacity: 0.3; }
+}
+
+/* ── Stage cards ── */
+.conversion__stages {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.conversion__stage {
+  flex: 1;
+  text-align: center;
+  padding: 40px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(12px);
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.conversion__stage:hover {
+  border-color: rgba(27, 94, 32, 0.3);
+  transform: translateY(-4px);
+  background: rgba(27, 94, 32, 0.06);
+}
+
+.conversion__stage-icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+/* ── Proportional funnel bar (replaces fake numbers) ── */
+.conversion__stage-bar-wrap {
+  width: 100%;
+  height: 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+
+.conversion__stage-bar {
+  width: var(--bar-width, 100%);
+  height: 100%;
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--green), var(--green-glow));
+  box-shadow: 0 0 12px rgba(76, 175, 80, 0.25);
+  transform-origin: left;
+  will-change: transform;
+}
+
+.conversion__stage-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 500;
+}
+
+.conversion__stage-arrow {
+  position: absolute;
+  right: -18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: var(--green-glow);
+  z-index: 3;
+}
+
+/* ── End statement ── */
+.conversion__end {
+  text-align: center;
+  margin-top: 64px;
+}
+
+.conversion__end-line {
+  width: 40px;
+  height: 2px;
+  background: var(--green);
+  margin: 0 auto 20px;
+}
+
+.conversion__end-text {
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.5px;
+}
+
+@media (max-width: 768px) {
+  .conversion { padding: 100px 24px; }
+  .conversion__stages { flex-direction: column; gap: 16px; }
+  .conversion__stage-arrow {
+    right: 50%;
+    top: auto;
+    bottom: -14px;
+    transform: translateX(50%) rotate(90deg);
+  }
+  .conversion__svg { display: none; }
+  .conversion__particles { display: none; }
+}
