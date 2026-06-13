@@ -7,19 +7,16 @@ gsap.registerPlugin(ScrollTrigger)
 
 /*
  * ─────────────────────────────────────────────────────────────
- *  FORMSPREE SETUP — replace the ID below with your real one:
+ *  WEB3FORMS SETUP
  *
- *  1. Go to https://formspree.io and create a free account
- *  2. Create a new form, set the recipient to Team@cliprelaymedia.com
- *  3. Copy the form ID (the part after /f/ in the endpoint URL)
- *  4. Paste it below, replacing "YOUR_FORM_ID"
- *
- *  Example: if your endpoint is https://formspree.io/f/xwkgjqal
- *  then set FORMSPREE_ID = 'xwkgjqal'
+ *  Submissions POST to Web3Forms and are emailed to the inbox
+ *  tied to the access key below. To change the destination or
+ *  rotate the key, sign in at https://web3forms.com and update
+ *  WEB3FORMS_ACCESS_KEY.
  * ─────────────────────────────────────────────────────────────
  */
-const FORMSPREE_ID = 'YOUR_FORM_ID' // <-- PASTE YOUR FORMSPREE FORM ID HERE
-const FORMSPREE_URL = `https://formspree.io/f/${FORMSPREE_ID}`
+const WEB3FORMS_ACCESS_KEY = '964e25c5-2cd4-4337-aea7-29d52d6fe99f'
+const WEB3FORMS_URL = 'https://api.web3forms.com/submit'
 
 const initialForm = { name: '', email: '', subject: '', message: '' }
 
@@ -85,10 +82,11 @@ export default function ContactSection() {
     setStatus('sending')
 
     try {
-      const res = await fetch(FORMSPREE_URL, {
+      const res = await fetch(WEB3FORMS_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
           name: form.name,
           email: form.email,
           subject: form.subject,
@@ -96,7 +94,9 @@ export default function ContactSection() {
         }),
       })
 
-      if (res.ok) {
+      const data = await res.json().catch(() => ({}))
+
+      if (res.ok && data.success) {
         setStatus('success')
         setForm(initialForm)
       } else {
@@ -133,6 +133,7 @@ export default function ContactSection() {
               </div>
             ) : (
               <form className="contact__form" onSubmit={handleSubmit} noValidate>
+                <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
                 <div className="contact__field">
                   <label htmlFor="contact-name" className="contact__label">Name</label>
                   <input
